@@ -4,8 +4,8 @@ const fs = require('fs');
 const http = require('http');
 const https = require('https');
 
-const koa = require('koa');
-const server = koa();
+const Koa = require('koa');
+const server = new Koa();
 
 const acmeRouter = require('./acme-router.js');
 server.use(acmeRouter.routes())
@@ -18,7 +18,7 @@ const {
 } = process.env
 
 const SSL_KEY = fs.readFileSync('./ssl/privkey.pem', 'utf8').toString();
-const SSL_KEY = fs.readFileSync('./ssl/fullchain.pem', 'utf8').toString();
+const SSL_CERT = fs.readFileSync('./ssl/fullchain.pem', 'utf8').toString();
 
 const serverCallback = server.callback();
 

@@ -1,4 +1,3 @@
-// acme-router.js
 'use strict';
 
 let fs = require('fs');
