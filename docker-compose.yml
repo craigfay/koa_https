@@ -13,7 +13,8 @@ services:
     command: node server
     restart: unless-stopped
     networks:
-    - app-network
+    # Opens all ports between containers on the same bridge network
+      - app-network
 
   webserver:
     container_name: webserver
@@ -30,9 +31,3 @@ services:
     restart: unless-stopped
     networks:
       - app-network
-      
-
-
-
-  # Opens all ports between containers on the same bridge network
-
