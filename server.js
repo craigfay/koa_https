@@ -17,27 +17,29 @@ const {
   HTTPS_PORT,
 } = process.env
 
-const SSL_KEY = fs.readFileSync('./ssl/privkey.pem', 'utf8').toString();
-const SSL_CERT = fs.readFileSync('./ssl/fullchain.pem', 'utf8').toString();
+const ssl = {
+  key: fs.readFileSync('./ssl/privkey.pem', 'utf8').toString(),
+  cert: fs.readFileSync('./ssl/fullchain.pem', 'utf8').toString(),
+}
 
 const serverCallback = server.callback();
 
 try {
   const httpServer = http.createServer(serverCallback);
   httpServer.listen(HTTP_PORT, function(err) {
-    if (!!err) console.error('HTTP server FAIL: ', err);
-    else console.log(`HTTP  server OK: http://${DOMAIN}:${HTTP_PORT}`);
+    if (!!err) console.error('HTTP:', err);
+    else console.log(`HTTP OK: http://${DOMAIN}:${HTTP_PORT}`);
   });
 }
 catch (ex) {
   console.error('Failed to start HTTP server\n', ex);
 }
-
+ 
 try {
-  const httpServer = https.createServer(serverCallback);
+  const httpServer = https.createServer(ssl, serverCallback);
   httpServer.listen(HTTPS_PORT, function(err) {
-    if (!!err) console.error('HTTPS server FAIL: ', err);
-    else console.log(`HTTPS  server OK: http://${DOMAIN}:${HTTPS_PORT}`);
+    if (!!err) console.error('HTTPS:', err);
+    else console.log(`HTTPS OK: http://${DOMAIN}:${HTTPS_PORT}`);
   });
 }
 catch (ex) {
