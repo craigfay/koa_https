@@ -8,4 +8,4 @@ RUN npm install --quiet
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 80
