@@ -40,7 +40,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email %EMAIL% --agree-tos --no-eff-email --staging -keep-until-expiring --keep-until-expiring -d %DOMAIN%  -d www.%DOMAIN%
+    command: certonly --webroot --webroot-path=/var/www/html --email %EMAIL% --agree-tos --no-eff-email --staging --keep-until-expiring -d %DOMAIN%  -d www.%DOMAIN%
 
 volumes:
   certbot-etc:

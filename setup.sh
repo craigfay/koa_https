@@ -10,13 +10,13 @@ declare -a files=(
   "nginx-conf/challenge.conf"
   "after-ssl.conf"
 )
-echo -n "Replacing files ... "
+echo "Replacing files ... "
 for file in "${files[@]}"; do
   sed -i "s/%EMAIL%/$email/g" $file
   sed -i "s/%DOMAIN%/$domain/g" $file
 done
 
 # build docker container for ssl aquisition 
-echo -n "Obtaining SSL certificates ... "
+echo "Obtaining SSL certificates ... "
 sudo docker-compose build
 sudo docker-compose up certbot
