@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# populate templates with real domain/email values
 echo -n "domain: "
 read domain
 echo -n "email: "
@@ -16,7 +15,9 @@ for file in "${files[@]}"; do
   sed -i "s/%DOMAIN%/$domain/g" $file
 done
 
-# build docker container for ssl aquisition 
 echo "Obtaining SSL certificates ... "
 sudo docker-compose build
-sudo docker-compose up certbot
+sudo docker-compose up certbot || return 1
+
+echo "Generating Diffie-Hellman key"
+sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048
