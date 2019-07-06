@@ -20,4 +20,4 @@ sudo docker-compose build
 sudo docker-compose up certbot || return 1
 
 echo "Generating Diffie-Hellman key"
-sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048
+sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048 || return 1
