@@ -42,8 +42,6 @@ services:
       - webserver
     command: certonly --webroot --webroot-path=/var/www/html --email %EMAIL% --agree-tos --no-eff-email --staging -d %DOMAIN%  -d www.%DOMAIN%
 
-%EMAIL%
-
 volumes:
   certbot-etc:
   certbot-var:
