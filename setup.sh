@@ -23,4 +23,4 @@ echo "Generating Diffie-Hellman key ..."
 sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048 || return 1
 
 echo "Adding new nginx config ..."
-mv after-ssl.conf nginx-conf/nginx.conf
+mv after-ssl.conf nginx-conf/nginx.conf || return 1
