@@ -40,7 +40,9 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email email@example.com --agree-tos --no-eff-email --staging -d example.com  -d www.example.com 
+    command: certonly --webroot --webroot-path=/var/www/html --email %EMAIL% --agree-tos --no-eff-email --staging -d %DOMAIN%  -d www.%DOMAIN%
+
+%EMAIL%
 
 volumes:
   certbot-etc:
@@ -55,7 +57,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/scarlet/loa_https/dhparam/
+      device: /home/scarlet/koa_https/dhparam/
       o: bind
 
 networks:
