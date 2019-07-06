@@ -8,6 +8,8 @@ Inspired by [DigitalOcean Literature](https://www.digitalocean.com/community/tut
 ### Todo
 * Add instructions for recommended optional steps
   * Create non-root sudo user
+    * `adduser username`
+    * `usermod -aG sudo username`
   * Setup a firewall with ufw
 
 ### Notes
