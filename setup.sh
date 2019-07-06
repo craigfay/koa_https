@@ -1,10 +1,12 @@
 #!/bin/bash
+# populate templates with real domain/email values
 echo -n "domain: "
 read domain
 echo -n "email: "
 read email
 declare -a files=(
   "docker-compose.yml"
+  "nginx-conf/challenge.conf"
   "nginx-conf/nginx.conf"
 )
 for file in "${files[@]}"; do
