@@ -9,15 +9,18 @@ declare -a files=(
   "nginx-conf/challenge.conf"
   "after-ssl.conf"
 )
-echo "Replacing files ... "
+echo "Replacing files ..."
 for file in "${files[@]}"; do
   sed -i "s/%EMAIL%/$email/g" $file
   sed -i "s/%DOMAIN%/$domain/g" $file
 done
 
-echo "Obtaining SSL certificates ... "
+echo "Obtaining SSL certificates ..."
 sudo docker-compose build
 sudo docker-compose up certbot || return 1
 
-echo "Generating Diffie-Hellman key"
+echo "Generating Diffie-Hellman key ..."
 sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048 || return 1
+
+echo "Adding new nginx config ..."
+mv after-ssl.conf nginx-conf/nginx.conf
