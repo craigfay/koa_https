@@ -7,7 +7,7 @@ read email
 declare -a files=(
   "docker-compose.yml"
   "nginx-conf/challenge.conf"
-  "nginx-conf/nginx.conf"
+  "after-ssl.conf"
 )
 for file in "${files[@]}"; do
   sed -i "s/%EMAIL%/$email/g" $file
