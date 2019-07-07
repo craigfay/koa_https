@@ -30,7 +30,7 @@ echo "Setting up a cron to renew ssl ..."
 declare renew_ssl="/home/scarlet/koa_https/ssl_renew.sh"
 declare new_line="*/1 * * * * $renew_ssl >> /var/log/cron.log 2>&1"
 crontab -l > tmp_cron
-new_line >> tmp_cron 
+echo new_line >> tmp_cron 
 crontab tmp_cron
 rm tmp_cron 
 
