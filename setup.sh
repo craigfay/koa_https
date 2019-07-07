@@ -26,4 +26,12 @@ sudo openssl dhparam -out ./dhparam/dhparam-2048.pem 2048 || return 1
 echo "Adding new nginx config ..."
 mv after-ssl.conf nginx-conf/nginx.conf || return 1
 
+echo "Setting up a cron to renew ssl ..."
+declare renew_ssl="/home/scarlet/koa_https/ssl_renew.sh"
+declare new_line="*/1 * * * * $renew_ssl >> /var/log/cron.log 2>&1"
+crontab -l > tmp_cron
+new_line >> tmp_cron 
+crontab tmp_cron
+rm tmp_cron 
+
 echo "Done! use \"sudo docker-compose up -d webserver\" to start the server."
