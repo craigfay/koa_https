@@ -58,13 +58,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./public/
+      device: /home/scarlet/koa_https/public/
       o: bind
   dhparam:
     driver: local
     driver_opts:
       type: none
-      device: ./dhparam/
+      device: /home/scarlet/koa_https/dhparam/
       o: bind
 
 networks:
