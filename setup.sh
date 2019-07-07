@@ -30,9 +30,9 @@ echo "Setting up a cron to renew ssl ..."
 declare renew_ssl="/home/scarlet/koa_https/ssl_renew.sh"
 declare cron_log="/var/log/cron.log"
 declare new_line="*/1 * * * * $renew_ssl >> $cron_log"
-crontab -l > tmp_cron
+sudo crontab -l > tmp_cron
 echo "$new_line" >> tmp_cron 
-crontab tmp_cron
+sudo crontab tmp_cron
 rm tmp_cron 
 
 echo "Done! use \"sudo docker-compose up -d webserver\" to start the server."
