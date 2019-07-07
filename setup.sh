@@ -16,7 +16,7 @@ for file in "${files[@]}"; do
 done
 
 echo "Obtaining SSL certificates ..."
-sudo docker-compose build
+sudo docker-compose build || return 1
 sudo docker-compose up certbot || return 1
 sudo docker-compose down || return 1
 
