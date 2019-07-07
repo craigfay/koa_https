@@ -28,7 +28,8 @@ mv after-ssl.conf nginx-conf/nginx.conf || return 1
 
 echo "Setting up a cron to renew ssl ..."
 declare renew_ssl="/home/scarlet/koa_https/ssl_renew.sh"
-declare new_line="*/1 * * * * $renew_ssl >> /var/log/cron.log 2>&1"
+declare cron_log="/var/log/cron.log"
+declare new_line="*/1 * * * * $renew_ssl >> $cron_log"
 crontab -l > tmp_cron
 echo "$new_line" >> tmp_cron 
 crontab tmp_cron
