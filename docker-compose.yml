@@ -48,6 +48,7 @@ services:
       --agree-tos
       --no-eff-email
       --keep-until-expiring
+      --staging
       -d %DOMAIN% 
       -d www.%DOMAIN%
 
@@ -69,4 +70,5 @@ volumes:
 
 networks:
   app-network:
+    # opens all ports between containers on the same bridge network, 
     driver: bridge 
