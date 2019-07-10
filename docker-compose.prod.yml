@@ -1,0 +1,22 @@
+version: '3'
+services:
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: >
+      certonly
+      --webroot
+      --webroot-path=/var/www/html
+      --email $EMAIL
+      --agree-tos
+      --no-eff-email
+      --keep-until-expiring
+      --staging
+      -d $DOMAIN 
+      -d www.$DOMAIN
