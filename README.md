@@ -15,3 +15,5 @@ Inspired by [DigitalOcean Literature](https://www.digitalocean.com/community/tut
 ### Notes
 * start webserver `docker-compose up -d`
 * renew ssl certs: `sudo docker-compose up --force-recreate --no-deps certbot`
+* start in development mode: `docker-compose -f docker-compose.yml up`
+* start in production mode: `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`
