@@ -6,9 +6,6 @@ if [[ -z $DOMAIN ]]; then
   read DOMAIN
 fi
 
-echo "$DOMAIN"
-exit 0
-
 declare -a files=(
   "nginx-prod/nginx.conf"
   "nginx/nginx.conf"
