@@ -1,9 +1,17 @@
 #!/bin/bash
 
-echo -n "domain: "
-read domain
+DOMAIN="$1"
+if [[ -z $DOMAIN ]]; then
+  echo -n "domain: "
+  read DOMAIN
+fi
+
+echo "$DOMAIN"
+exit 0
+
 declare -a files=(
   "nginx-prod/nginx.conf"
+  "nginx/nginx.conf"
 )
 echo "Replacing files ..."
 for file in "${files[@]}"; do
