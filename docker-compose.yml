@@ -13,33 +13,29 @@ services:
     networks:
       - app-network
 
-  webserver:
-    image: nginx:mainline-alpine
-    container_name: webserver
+  nginx:
+    image: nginx:1.15-alpine
     restart: unless-stopped
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
-    volumes:
-      - web-root:/var/www/html
-      - ./nginx:/etc/nginx/conf.d
+      - "443:443"
     depends_on:
       - nodejs
     networks:
       - app-network
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-volumes:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: $PUBLIC_DIR
-      o: bind
-  dhparam:
-    driver: local
-    driver_opts:
-      type: none
-      device: $DH_DIR
-      o: bind
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 networks:
   app-network:
