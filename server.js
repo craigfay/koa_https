@@ -4,7 +4,7 @@ const server = new Koa();
 const { PORT } = process.env;
 const html = `
   <link rel="stylesheet" href="/main.css">
-  <p>Hello</p>
+  <p>Hello from node</p>
 `
 server.use(ctx => ctx.body = html);
 server.listen(PORT, () => console.log('Listening ...'));
