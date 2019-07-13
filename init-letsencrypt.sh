@@ -12,7 +12,7 @@ if [[ -z $domains ]]; then
 fi
 
 declare -a files=(
-  "data/nginx/app.conf"
+  "volumes/production/nginx/app.conf"
 )
 
 echo "Replacing files ..."
