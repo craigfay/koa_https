@@ -21,7 +21,7 @@ for file in "${files[@]}"; do
 done
 
 rsa_key_size=4096
-data_path="./volumes/certbot"
+data_path="./volumes/production/certbot"
 email="" # Adding a valid address is strongly recommended
 staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
@@ -37,7 +37,7 @@ if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/
   echo "### Downloading recommended TLS parameters ..."
   mkdir -p "$data_path/conf"
   curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$data_path/conf/options-ssl-nginx.conf"
-  openssl dhparam -out "$data_path/conf/ssl-dhparams.pem" 4096
+  openssl dhparam -out "$data_path/conf/ssl-dhparams.pem" 2048 
   echo
 fi
 
