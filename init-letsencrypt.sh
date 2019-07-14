@@ -15,10 +15,10 @@ declare -a files=(
   "volumes/nginx/app.conf"
 )
 
-echo "Replacing files ..."
-for file in "${files[@]}"; do
-  sed -i "s/%DOMAINS%/$domains/g" $file
-done
+#echo "Replacing files ..."
+#for file in "${files[@]}"; do
+  #sed -i "s/%DOMAINS%/$domains/g" $file
+#done
 
 rsa_key_size=4096
 data_path="./volumes/certbot"
@@ -50,6 +50,10 @@ sudo docker-compose run --rm --entrypoint "\
     -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot
 echo
+
+echo "### Renaming template strings in nginx config ..."
+sudo docker-compose run --rm --entrypoint "\
+  sed -i "s/%DOMAINS%/$domains/g" /etc/nginx/conf.d/app.conf" nginx
 
 
 echo "### Starting nginx ..."
