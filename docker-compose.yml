@@ -17,7 +17,7 @@ services:
     image: nginx:1.15-alpine
     restart: unless-stopped
     volumes:
-      - ./volumes/nginx/production:/etc/nginx/conf.d
+      - ./volumes/nginx/production:/etc/nginx
       - ./volumes/certbot/conf:/etc/letsencrypt
       - ./volumes/certbot/www:/var/www/certbot
     ports:

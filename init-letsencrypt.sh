@@ -15,11 +15,6 @@ declare -a files=(
   "volumes/nginx/app.conf"
 )
 
-#echo "Replacing files ..."
-#for file in "${files[@]}"; do
-  #sed -i "s/%DOMAINS%/$domains/g" $file
-#done
-
 rsa_key_size=4096
 data_path="./volumes/certbot"
 email="" # Adding a valid address is strongly recommended
@@ -53,6 +48,7 @@ echo
 
 echo "### Renaming template strings in nginx config ..."
 sudo docker-compose run --rm --entrypoint "\
+  cp /etc/nginx/app.conf.tmp /etc/nginx/conf.d/app.conf
   sed -i "s/%DOMAINS%/$domains/g" /etc/nginx/conf.d/app.conf" nginx
 
 
