@@ -11,10 +11,6 @@ if [[ -z $domains ]]; then
   read domains
 fi
 
-declare -a files=(
-  "volumes/nginx/app.conf"
-)
-
 rsa_key_size=4096
 data_path="./volumes/certbot"
 email="" # Adding a valid address is strongly recommended
@@ -46,11 +42,11 @@ sudo docker-compose run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 echo
 
-echo "### Renaming template strings in nginx config ..."
-sudo docker-compose run --rm --entrypoint "\
-  cp /etc/nginx/app.conf.tmp /etc/nginx/conf.d/app.conf
-  sed -i "s/%DOMAINS%/$domains/g" /etc/nginx/conf.d/app.conf" nginx
-
+echo "### Generating nginx config ..."
+nginx_path="volumes/nginx/production"
+cp -f $nginx_path/base.conf-tpl $nginx_path/generated.conf
+sed -i "s/%DOMAINS%/$domains/g" $nginx_path/generated.conf
+echo
 
 echo "### Starting nginx ..."
 sudo docker-compose up --force-recreate -d nginx
