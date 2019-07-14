@@ -1,2 +1,4 @@
 node_modules/
 .env
+volumes/certbot/
+volumes/nginx/production/generated.conf

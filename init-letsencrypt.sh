@@ -11,17 +11,9 @@ if [[ -z $domains ]]; then
   read domains
 fi
 
-declare -a files=(
-  "volumes/production/nginx/app.conf"
-)
-
-echo "Replacing files ..."
-for file in "${files[@]}"; do
-  sed -i "s/%DOMAINS%/$domains/g" $file
-done
-
 rsa_key_size=4096
-data_path="./volumes/production/certbot"
+data_path="./volumes/certbot"
+
 email="" # Adding a valid address is strongly recommended
 staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
@@ -51,6 +43,11 @@ sudo docker-compose run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 echo
 
+echo "### Generating nginx config ..."
+nginx_path="volumes/nginx/production"
+cp -f $nginx_path/base.conf-tpl $nginx_path/generated.conf
+sed -i "s/%DOMAINS%/$domains/g" $nginx_path/generated.conf
+echo
 
 echo "### Starting nginx ..."
 sudo docker-compose up --force-recreate -d nginx
