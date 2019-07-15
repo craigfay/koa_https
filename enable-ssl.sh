@@ -13,7 +13,7 @@ while getopts ":d:e:s:" opt; do
     ;;
     e) email="$OPTARG" || "" # Adding a valid address is strongly recommended
     ;;
-    s) staging="$OPTARG" || 1 # Set to 1 if you're testing your setup to avoid hitting request limits
+    s) staging="y" # Set to 1 if you're testing your setup to avoid hitting request limits
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
