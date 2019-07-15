@@ -6,7 +6,10 @@ Inspired by [DigitalOcean Literature](https://www.digitalocean.com/community/tut
 * Assumes Ubuntu 18.04 and Docker 18.09.6
 * Have a registered domain name that points to the working machine
 
-### Instructions
+### Development Instructions
+* From this directory: `docker-compose build && docker-compose up`
+
+### Deployment Instructions
 * Create non-root sudo user
   * `adduser username`
   * `usermod -aG sudo username`
