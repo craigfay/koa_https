@@ -25,12 +25,11 @@ if [ -d "$certbot_path" ]; then
   fi
 fi
 
-
 if [ ! -e "$certbot_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$certbot_path/conf/ssl-dhparams.pem" ]; then
   echo "### Downloading recommended TLS parameters ..."
   mkdir -p "$certbot_path/conf"
   curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$certbot_path/conf/options-ssl-nginx.conf"
-  openssl dhparam -out "$certbot_path/conf/ssl-dhparams.pem" 2048 
+  openssl dhparam -out "$certbot_path/conf/ssl-dhparams.pem" $rsa_key_size
   echo
 fi
 
@@ -61,7 +60,6 @@ sudo docker-compose run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
 echo
 
-
 echo "### Requesting Let's Encrypt certificate for $domains ..."
 #Join $domains to -d args
 domain_args=""
@@ -90,3 +88,4 @@ echo
 
 echo "### Reloading nginx ..."
 sudo docker-compose exec nginx nginx -s reload
+sudo docker stop nginx
