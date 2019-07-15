@@ -7,13 +7,13 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 # parse args
-while getopts ":d:e:s:" opt; do
+while getopts ":d:e:s" opt; do
   case $opt in
     d) domains="$OPTARG"
     ;;
-    e) email="$OPTARG" || "" # Adding a valid address is strongly recommended
+    e) email="$OPTARG" || "" # adding a valid address is strongly recommended
     ;;
-    s) staging="y" # Set to 1 if you're testing your setup to avoid hitting request limits
+    s) staging="y"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -25,10 +25,7 @@ if [[ -z $domains ]]; then
   echo -n "domains: "
   read domains
 fi
-if [[ -z $email ]]; then
-  echo -n "email: "
-  read email
-fi
+
 if [[ -z $staging ]]; then
   echo -n "staging (y/n): "
   read staging
