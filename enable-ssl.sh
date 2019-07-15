@@ -109,6 +109,5 @@ sudo docker-compose run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-echo "### Reloading nginx ..."
-sudo docker-compose exec nginx nginx -s reload
+echo "### Stopping docker services"
 sudo docker stop nginx nodejs
