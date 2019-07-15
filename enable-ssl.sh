@@ -88,4 +88,4 @@ echo
 
 echo "### Reloading nginx ..."
 sudo docker-compose exec nginx nginx -s reload
-sudo docker stop nginx
+sudo docker stop nginx nodejs
