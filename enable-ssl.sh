@@ -26,11 +26,11 @@ if [[ -z $domains ]]; then
   read domains
 fi
 if [[ -z $email ]]; then
-  echo -n "email"
+  echo -n "email: "
   read email
 fi
 if [[ -z $staging ]]; then
-  echo -n "staging: (y/n)"
+  echo -n "staging (y/n): "
   read staging
 fi
 
