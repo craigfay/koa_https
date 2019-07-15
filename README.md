@@ -4,10 +4,19 @@ Inspired by [DigitalOcean Literature](https://www.digitalocean.com/community/tut
 
 ### Requirements
 * Assumes Ubuntu 18.04 and Docker 18.09.6
+* Have a registered domain name that points to the working machine
 
-### Todo
-* Add instructions for recommended optional steps
-  * Create non-root sudo user
-    * `adduser username`
-    * `usermod -aG sudo username`
-  * Setup a firewall with ufw
+### Instructions
+* Create non-root sudo user
+  * `adduser username`
+  * `usermod -aG sudo username`
+* Switch user
+  * `su - username`
+* Clone this repository
+  * `git clone https://github.com/craigfay/koa_https.git`
+  * `cd koa_https`
+* Build container and enable ssl
+  * `sudo docker-compose build`
+  * `./enable-ssl.sh`
+* Start server
+  * `sudo docker-compose up`
