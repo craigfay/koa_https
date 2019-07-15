@@ -12,12 +12,12 @@ if [[ -z $domains ]]; then
 fi
 
 rsa_key_size=4096
-data_path="./volumes/certbot"
+certbot_path="./volumes/production/certbot"
 
 email="" # Adding a valid address is strongly recommended
 staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
-if [ -d "$data_path" ]; then
+if [ -d "$certbot_path" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
   if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
     exit
@@ -25,17 +25,17 @@ if [ -d "$data_path" ]; then
 fi
 
 
-if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/ssl-dhparams.pem" ]; then
+if [ ! -e "$certbot_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$certbot_path/conf/ssl-dhparams.pem" ]; then
   echo "### Downloading recommended TLS parameters ..."
-  mkdir -p "$data_path/conf"
-  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$data_path/conf/options-ssl-nginx.conf"
-  openssl dhparam -out "$data_path/conf/ssl-dhparams.pem" 2048 
+  mkdir -p "$certbot_path/conf"
+  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$certbot_path/conf/options-ssl-nginx.conf"
+  openssl dhparam -out "$certbot_path/conf/ssl-dhparams.pem" 2048 
   echo
 fi
 
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
-mkdir -p "$data_path/conf/live/$domains"
+mkdir -p "$certbot_path/conf/live/$domains"
 sudo docker-compose run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:1024 -days 1\
     -keyout '$path/privkey.pem' \
@@ -44,7 +44,7 @@ sudo docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Generating nginx config ..."
-nginx_path="volumes/nginx/production"
+nginx_path="volumes/production/nginx"
 cp -f $nginx_path/base.conf-tpl $nginx_path/generated.conf
 sed -i "s/%DOMAINS%/$domains/g" $nginx_path/generated.conf
 echo
