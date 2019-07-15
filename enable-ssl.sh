@@ -1,4 +1,5 @@
 #!/bin/bash
+# Generates SSL certificates and Nginx config to utilize them
 
 if ! [ -x "$(command -v docker-compose)" ]; then
   echo 'Error: docker-compose is not installed.' >&2
