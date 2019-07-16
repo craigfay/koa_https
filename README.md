@@ -16,7 +16,7 @@ Inspired by [DigitalOcean Literature](https://www.digitalocean.com/community/tut
 * Switch user
   * `su - username`
 * Clone this repository
-  * `git clone https://github.com/craigfay/koa_https.git`
+  * `git clone https://github.com/craigfay/ssl-container`
   * `cd koa_https`
 * Build container and enable ssl
   * `sudo docker-compose build`
