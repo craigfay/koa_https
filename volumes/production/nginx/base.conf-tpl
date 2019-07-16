@@ -23,6 +23,14 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
+    location ~ \.css {
+        add_header  Content-Type    text/css;
+    }
+
+    location ~ \.js {
+        add_header  Content-Type    application/x-javascript;
+    }
+
     location / {
         try_files $uri @backend;
     }
