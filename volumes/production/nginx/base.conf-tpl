@@ -25,10 +25,12 @@ server {
 
     location ~ \.css {
         add_header  Content-Type    text/css;
+        try_files $uri @backend;
     }
 
     location ~ \.js {
         add_header  Content-Type    application/x-javascript;
+        try_files $uri @backend;
     }
 
     location / {
