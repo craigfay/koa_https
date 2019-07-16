@@ -17,21 +17,12 @@ server {
     listen 443 ssl;
     server_name %DOMAINS%;
     server_tokens off;
+    root /var/www/html;
 
     ssl_certificate /etc/letsencrypt/live/%DOMAINS%/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/%DOMAINS%/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
-    location ~ \.css {
-        add_header  Content-Type    text/css;
-        try_files $uri @backend;
-    }
-
-    location ~ \.js {
-        add_header  Content-Type    application/x-javascript;
-        try_files $uri @backend;
-    }
 
     location / {
         try_files $uri @backend;
