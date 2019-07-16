@@ -60,7 +60,7 @@ echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
 mkdir -p "$certbot_path/conf/live/$domains"
 sudo docker-compose run --rm --entrypoint "\
-  openssl req -x509 -nodes -newkey rsa:1024 -days 1\
+  openssl req -x509 -nodes -newkey rsa:1024 -days 1 \
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot
@@ -111,3 +111,7 @@ echo
 
 echo "### Stopping docker services"
 sudo docker stop nginx nodejs
+echo
+
+echo "### Updating .env file"
+echo "mode=production" > .env
