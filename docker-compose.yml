@@ -1,17 +1,26 @@
 version: '3'
 
 services:
+  npm_install:
+    image: node:10
+    volumes:
+      - "./src:/app/src"
+    working_dir: /app/src/
+    command: npm install
+    
   nodejs:
     image: node:10
     environment:
       PORT: 8080
     restart: unless-stopped
     volumes:
-      - "./:/app"
-    working_dir: /app
+      - "./src:/app/src"
+    working_dir: /app/src/
     networks:
       - app-network
-    command: node src/server.js
+    depends_on:
+      - npm_install
+    command: node main
 
   nginx:
     image: nginx:1.15-alpine
