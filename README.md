@@ -10,7 +10,8 @@ This project uses `src/public` as the path for static files.
 * Have a registered domain name pointing to the working machine
 
 ### Development Instructions
-* From this directory: `docker-compose build && docker-compose up`
+* From this directory: `docker-compose up`
+* Edit files in `./src`
 
 ### Deployment Instructions
 * Create non-root sudo user
@@ -21,8 +22,7 @@ This project uses `src/public` as the path for static files.
 * Clone this repository
   * `git clone https://github.com/craigfay/ssl-container`
   * `cd koa_https`
-* Build container and enable ssl
-  * `sudo docker-compose build`
+* Enable ssl
   * `./enable-ssl.sh`
 * Start server
   * `sudo docker-compose up`
