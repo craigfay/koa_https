@@ -21,7 +21,7 @@ This project uses `src/public` as the path for static files.
   * `su - username`
 * Clone this repository
   * `git clone https://github.com/craigfay/ssl-container`
-  * `cd koa_https`
+  * `cd ssl-container`
 * Enable ssl
   * `./enable-ssl.sh`
 * Start server
