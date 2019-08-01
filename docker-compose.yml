@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  npm_install:
-    image: node:10
-    volumes:
-      - "./src:/app/src"
-    working_dir: /app/src/
-    command: npm install
-    
   nodejs:
     image: node:10
     environment:
@@ -18,9 +11,7 @@ services:
     working_dir: /app/src/
     networks:
       - app-network
-    depends_on:
-      - npm_install
-    command: node main
+    command: npm run start
 
   nginx:
     image: nginx:1.15-alpine

@@ -1,23 +1,24 @@
 {
-  "name": "koa_https",
+  "name": "ssl-container",
   "version": "1.0.0",
   "description": "",
   "main": "router.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "prestart": "npm install",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/craigfay/koa_https.git"
+    "url": "git+https://github.com/craigfay/ssl-container.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/craigfay/koa_https/issues"
+    "url": "https://github.com/craigfay/ssl-container/issues"
   },
-  "homepage": "https://github.com/craigfay/koa_https#readme",
+  "homepage": "https://github.com/craigfay/ssl-container#readme",
   "dependencies": {
     "koa": "^2.7.0",
     "koa-router": "^7.4.0"
