@@ -1,4 +1,4 @@
-# Run the application in development mode
+# Run the application in production mode
 version: '3'
 services:
   nodejs:
@@ -17,16 +17,29 @@ services:
     restart: unless-stopped
     volumes:
       - ./app/public:/var/www/html
-      - ./volumes/nginx/development:/etc/nginx/conf.d
+      - ./volumes/nginx/production:/etc/nginx/conf.d
+      - ./volumes/certbot/conf:/etc/letsencrypt
+      - ./volumes/certbot/www:/var/www/certbot
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - nodejs
     networks:
       - app-network
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./volumes/certbot/conf:/etc/letsencrypt
+      - ./volumes/certbot/www:/var/www/certbot
+
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
 networks:
   app-network:
     # opens all ports between containers on the same bridge network, 
     driver: bridge 
+

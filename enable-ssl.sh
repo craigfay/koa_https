@@ -39,19 +39,17 @@ case "$staging" in
 esac
 
 rsa_key_size=4096
-certbot_path="./volumes/production/certbot"
+certbot_path="./volumes/certbot"
 
-if [ -d "$certbot_path" ]; then
+if [ -d "$certbot_path/www" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
   if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
     exit
   fi
 fi
 
-if [ ! -e "$certbot_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$certbot_path/conf/ssl-dhparams.pem" ]; then
-  echo "### Downloading recommended TLS parameters ..."
-  mkdir -p "$certbot_path/conf"
-  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/options-ssl-nginx.conf > "$certbot_path/conf/options-ssl-nginx.conf"
+if [ ! -e "$certbot_path/conf/ssl-dhparams.pem" ]; then
+  echo "### Generating TLS parameters ..."
   openssl dhparam -out "$certbot_path/conf/ssl-dhparams.pem" $rsa_key_size
   echo
 fi
@@ -59,7 +57,7 @@ fi
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
 mkdir -p "$certbot_path/conf/live/$domains"
-sudo docker-compose run --rm --entrypoint "\
+sudo docker-compose -f docker-compose.production.yml run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:1024 -days 1 \
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
@@ -67,17 +65,17 @@ sudo docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Generating nginx config ..."
-nginx_path="volumes/production/nginx"
+nginx_path="volumes/nginx/production"
 cp -f $nginx_path/base.conf-tpl $nginx_path/generated.conf
 sed -i "s/%DOMAINS%/$domains/g" $nginx_path/generated.conf
 echo
 
 echo "### Starting nginx ..."
-sudo docker-compose up --force-recreate -d nginx
+sudo docker-compose -f docker-compose.production.yml up -d --force-recreate nginx
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
-sudo docker-compose run --rm --entrypoint "\
+sudo docker-compose  -f docker-compose.production.yml run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/$domains && \
   rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
@@ -99,7 +97,7 @@ esac
 # Enable staging mode if needed
 if [ $staging != "n" ]; then staging_arg="--staging"; fi
 
-sudo docker-compose run --rm --entrypoint "\
+sudo docker-compose -f docker-compose.production.yml run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $staging_arg \
     $email_arg \
@@ -109,9 +107,6 @@ sudo docker-compose run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-echo "### Stopping docker services"
-sudo docker stop nginx nodejs
-echo
-
-echo "### Updating .env file"
-echo "mode=production" > .env
+# Stopping all containers could potentially shutdown other systems running on the host
+# so instead, we just prompt the user to restart manually.
+echo "### Finished! You'll need to restart Docker containers for changes to take effect."
