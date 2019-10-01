@@ -6,6 +6,6 @@ const html = `
 `;
 
 http.createServer((req, res) => {
-  res.writeHead(200);
+  res.writeHead(200, { 'content-type': 'text/html' });
   res.end(html);
 }).listen(process.env.PORT, () => console.log('listening ...'))
