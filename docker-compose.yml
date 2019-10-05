@@ -5,14 +5,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    volumes:
-      - "./app:/app"
     working_dir: '/app'
     environment:
       PORT: 8080
     networks:
       - app-network
-    command: npm run start
+    command: node src/main.js
 
   nginx:
     image: nginx:1.15-alpine

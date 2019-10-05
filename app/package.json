@@ -1,9 +1,12 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node + SSL",
+  "repository": "https://github.com/craigfay/ssl-container",
   "main": "main.js",
   "scripts": {
+    "preproduction": "npm install",
+    "production": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
   },
