@@ -1,7 +1,7 @@
 server {
     listen 80;
     listen [::]:80;
-    server_name %DOMAINS%;
+    server_name %DOMAIN%;
 
     location /.well-known/acme-challenge/ {
         allow all;
@@ -15,12 +15,12 @@ server {
 
 server {
     listen 443 ssl;
-    server_name %DOMAINS%;
+    server_name %DOMAIN%;
     server_tokens off;
     root /var/www/html;
 
-    ssl_certificate /etc/letsencrypt/live/%DOMAINS%/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/%DOMAINS%/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/%DOMAIN%/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/%DOMAIN%/privkey.pem;
     # include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
