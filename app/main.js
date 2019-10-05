@@ -1,11 +1,8 @@
-const http = require('http');
+// Start serving HTTP
+const server = require('./server');
+server.listen(process.env.PORT, () => console.log('listening ...'));
 
-const html = `
-  <link rel="stylesheet" href="/main.css">
-  <p>Hello from node</p>
-`;
-
-http.createServer((req, res) => {
-  res.writeHead(200, { 'content-type': 'text/html' });
-  res.end(html);
-}).listen(process.env.PORT, () => console.log('listening ...'))
+// Respond to shutdown signals
+const shutdown = () => server.close(err => process.exit(err ? 1 : 0));
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
