@@ -23,7 +23,7 @@ This project uses `app/public` as the path for static files.
   * `git clone https://github.com/craigfay/ssl-container`
   * `cd ssl-container`
 * Enable ssl
-  * `./enable-ssl.sh`
+  * `./enable-ssl.sh --domain example.com --email human@example.com`
 * Start application (development)
   * `sudo docker-compose up`
 * Start application (production):
