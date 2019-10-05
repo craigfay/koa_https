@@ -2,15 +2,15 @@
 version: '3'
 services:
   nodejs:
-    image: node:12
-    volumes:
-      - "./app:/app"
+    build:
+      context: ./
+      dockerfile: Dockerfile
     working_dir: '/app'
     environment:
       PORT: 8080
     networks:
       - app-network
-    command: npm run start
+    command: npm run production
 
   nginx:
     image: nginx:1.15-alpine
