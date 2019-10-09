@@ -72,7 +72,7 @@ echo
 echo "### Generating nginx config ..."
 nginx_path="volumes/nginx/production"
 cp -f $nginx_path/base.conf-tpl $nginx_path/generated.conf
-sed -i "s/%domain%/$domain/g" $nginx_path/generated.conf
+sed -i "s/%DOMAIN%/$domain/g" $nginx_path/generated.conf
 echo
 
 echo "### Starting nginx ..."
